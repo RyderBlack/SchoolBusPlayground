@@ -6,6 +6,60 @@ let canvas = Canvas()
 PlaygroundPage.current.needsIndefiniteExecution = true
 PlaygroundPage.current.liveView = canvas
 
+class Bus {
+    
+    init(driverName: String) {
+        self.driverName = driverName
+    }
+    var driverName: String
+    var seats = 20
+    var occupiedSeats = 0
+    
+    let numberOfWheel = 4
+    
+    
+    func moveForward() {
+        canvas.moveBusForward()
+    }
+    
+    func stop() {
+        canvas.stopBus()
+    }
+    
+    func drive(road: Road) {
+        for _ in road.sections {
+            moveForward()
+        }
+    }
+}
+
+
+class RoadSection {
+    init() {
+        canvas.createRoadSection()
+    }
+}
+
+
+class Road {
+    static let maxLength = 77
+    var sections = [RoadSection]()
+    
+    init(length: Int) {
+        var length = length
+        if length > Road.maxLength {
+            length = Road.maxLength
+        }
+        for _ in 0..<length {
+            self.sections.append(RoadSection())
+        }
+    }
+}
+
+var road = Road(length: 30) // Vous devriez voir une route de 20 sections se dessiner sur le canevas.
+var unBus = Bus(driverName: "Jean")
+unBus.drive(road: road) // Le bus avance jusqu'au bout de la route
+
 /*:
  - - -
  # Découverte du canevas
