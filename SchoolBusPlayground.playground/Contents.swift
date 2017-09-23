@@ -34,9 +34,34 @@ class Bus {
 }
 
 
+class SchoolBus: Bus {
+    var schoolName = ""
+}
+
+var unBusScolaire = SchoolBus(driverName: "Jean")
+unBusScolaire.seats = 40
+unBusScolaire.moveForward()
+
+enum RoadSectionType {
+    case plain
+    case home
+    case school
+}
+
 class RoadSection {
-    init() {
-        canvas.createRoadSection()
+    
+    var type: RoadSectionType
+
+    init(type: RoadSectionType) {
+        self.type = type
+        switch type {
+        case .plain:
+            canvas.createRoadSection()
+        case .home:
+            canvas.createHomeRoadSection()
+        case .school:
+            canvas.createSchoolRoadSection()
+        }
     }
 }
 
@@ -55,6 +80,21 @@ class Road {
         }
     }
 }
+
+class HomeRoadSection: RoadSection {
+    var children: Int
+    init(children: Int) {
+        self.children = children
+        super.init(type: .home)
+    }
+}
+
+class SchoolRoadSection: RoadSection {
+    init() {
+        super.init(type: .school)
+    }
+}
+
 
 var road = Road(length: 30) // Vous devriez voir une route de 20 sections se dessiner sur le canevas.
 var unBus = Bus(driverName: "Jean")
